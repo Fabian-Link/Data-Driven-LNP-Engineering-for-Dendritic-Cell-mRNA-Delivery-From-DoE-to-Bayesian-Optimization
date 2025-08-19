@@ -1,5 +1,5 @@
 # Data-Driven-LNP-Engineering-for-Dendritic-Cell-mRNA-Delivery-From-DoE-to-Bayesian-Optimization
-A Python based mixture aware bayesian optimization algorithm for LNP formlation optimization based on Botorch.
+A Python based mixture aware bayesian optimization algorithm for LNP formulation optimization based on Botorch.
 
 # Description
 This repository contains all code used in our study.

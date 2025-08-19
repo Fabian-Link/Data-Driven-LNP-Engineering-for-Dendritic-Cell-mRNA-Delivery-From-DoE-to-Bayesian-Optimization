@@ -1,0 +1,10 @@
+#######################
+# Defining file paths #
+#######################
+
+data:
+  raw: data/raw/
+  processed: data/processed/
+
+results:
+  candidates: results/candidates/
