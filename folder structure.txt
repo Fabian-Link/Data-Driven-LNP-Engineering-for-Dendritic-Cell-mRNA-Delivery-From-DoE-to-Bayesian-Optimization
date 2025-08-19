@@ -1,0 +1,57 @@
+lnp-dc-bo/
+├─ README.md
+├─ LICENSE
+├─ CITATION.cff
+├─ .gitignore
+├─ pyproject.toml              # packaging + deps (torch, botorch, gpytorch, numpy, scipy, pandas, matplotlib, scikit-learn, openpyxl)
+├─ requirements.txt            # optional alternative to pyproject
+├─ configs/
+│  ├─ bounds.yaml              # L/U bounds, N/P limits, mixture labels
+│  ├─ acquisition.yaml         # acq type, q, restarts, raw_samples
+│  └─ paths.yaml               # input/output paths
+├─ data/
+│  ├─ raw/                     # untouched Excel files
+│  │  ├─ LNP_Formulation_All_Data_Mean.xlsx
+│  │  └─ LNP_Formulation_8_Luciferase_triplicates.xlsx
+│  ├─ interim/                 # cleaned, harmonized
+│  └─ processed/               # model-ready (ALR+NP, splits)
+├─ src/lnp_bo/
+│  ├─ __init__.py
+│  ├─ design/                  # design space + samplers
+│  │  ├─ mixture_polytope.py   # vertices, hulls, projection, barycentric, volumes
+│  │  ├─ sampling.py           # Sobol (1D/ND), star discrepancy, DOE loader
+│  │  └─ transforms.py         # ALR↔simplex, normalization utilities
+│  ├─ models/
+│  │  ├─ gp.py                 # init GP (GPyTorch/BoTorch), training, LOO-CV
+│  │  ├─ bounds.py             # ALR bounds from simplex bounds
+│  │  └─ acquisition.py        # EI/NEI/UCB factories, optimize_acqf wrappers
+│  ├─ io/
+│  │  ├─ load.py               # load_and_clean, noise prior from triplicates
+│  │  └─ export.py             # Excel/CSV writers for candidates & designs
+│  ├─ viz/
+│  │  ├─ mixture_plots.py      # simplex/polytope, subdivisions, samples overlays
+│  │  ├─ gp_diagnostics.py     # loss curves, hyperparam tracks, parity plots
+│  │  └─ profiles.py           # 1D/2D response profiles, heatmaps
+│  └─ utils/
+│     ├─ seed.py               # global seeding
+│     └─ metrics.py            # R², MAE, etc. (and star discrepancy if preferred here)
+├─ scripts/                    # CLI entry points (keep notebooks thin)
+│  ├─ build_polytope.py        # read bounds → vertices/triangulation → figs
+│  ├─ design_generate.py       # Sobol/DOE sets + discrepancy scoring
+│  ├─ fit_gp.py                # train GP, LOO, diagnostics, save state_dict
+│  ├─ propose_candidates.py    # load GP → acq optimize → export batch
+│  ├─ plot_diagnostics.py      # regenerate plots from saved artifacts
+│  └─ export_excel.py          # write final 5D design spreadsheet
+├─ notebooks/
+│  ├─ 00_exploration.ipynb
+│  └─ 10_gp_dev.ipynb
+├─ results/
+│  ├─ figures/
+│  ├─ tables/
+│  └─ candidates/              # proposed batches (timestamped)
+├─ tests/
+│  ├─ test_mixture_polytope.py
+│  ├─ test_transforms.py
+│  └─ test_gp.py
+└─ .github/workflows/
+   └─ ci.yml                   # pytest + flake8/ruff + black
