@@ -76,11 +76,12 @@ python scripts/design_generate.py
 This writes Sobol/DOE candidate tables to results/design/ and figures to results/figures/.
 Pick a design (e.g., best_sobol_samples.csv) and run those experiments to obtain responses.
 
-**Record experimental results(warm start)**
+**Record experimental results (warm start)**
 - Put a copy of your results Excel in data/raw/ with the six required columns in the exact order above.
 - Point configs/paths.yaml:data.train_excel to that file (e.g., data/raw/MyWarmStart.xlsx).
 
 Example raw Excel preview:
+
 ![alt text](image.png)
 
 **Fit the GP on your warm-start data**
