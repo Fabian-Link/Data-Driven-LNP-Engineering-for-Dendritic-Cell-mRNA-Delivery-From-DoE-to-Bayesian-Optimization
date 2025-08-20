@@ -1,10 +1,8 @@
-#######################
-# Defining file paths #
-#######################
-
-data:
-  raw: data/raw/
-  processed: data/processed/
+#========================
+# Defining file paths
+#========================
 
 results:
-  candidates: results/candidates/
+  figures_dir: results/figures
+  design_dir:  results/design
+
