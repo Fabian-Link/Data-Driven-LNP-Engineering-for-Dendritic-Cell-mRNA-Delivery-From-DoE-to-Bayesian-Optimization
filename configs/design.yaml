@@ -1,8 +1,14 @@
-# Sampling settings
+#--------------------------------------------------------------------
+# Initial design generation (Sobol / DOE) settings
+#--------------------------------------------------------------------
+
+seed: 42            # for reproducibility of sampling
+
+# Sobol sampling for mixture polytope
 num_sobol_samples: 16
 n_replicates: 100
 
-# Optional: DOE design points (each row sums ~1.0)
+# Optional: DOE design points (each row should sum ~ 1.0)
 doe:
   - [0.01, 0.2, 0.1, 0.69]
   - [0.1, 0.2, 0.1, 0.6]

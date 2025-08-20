@@ -1,0 +1,21 @@
+#--------------------------------------------------------------------
+# Gaussian Process (GP) / training configuration
+#--------------------------------------------------------------------
+
+# Optional Gamma prior on the observation noise variance.
+# If `use` is false, the GP will use an uninformative/default noise prior.
+noise_prior:
+  use: true
+  alpha: 3.0
+  beta: 8.041
+
+# (Optional) training hyperparameters used by fit_gp.py
+train:
+  optimizer: adam     # options: adam
+  lr: 0.01
+  steps: 800
+
+# (Optional) runtime defaults (fit_gp.py can ignore if you prefer)
+dtype: double         # double | float
+device: cpu           # cpu | cuda
+seed: 42

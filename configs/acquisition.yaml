@@ -1,3 +1,13 @@
-#==============================
-# Defining model parameters
-#==============================
+#--------------------------------------------------------------------
+# BoTorch acquisition + optimizer settings
+#--------------------------------------------------------------------
+
+acquisition:
+  name: LogNEI          # one of: LogNEI, LogEI, PI, UCB
+  beta: 0.05            # only used if name == UCB
+
+optimization:
+  q: 3                  # batch size
+  num_restarts: 10
+  raw_samples: 512
+  mc_samples: 256       # for MC-based acqs (SobolQMCNormalSampler)

@@ -1,0 +1,2 @@
+mse,rmse,mae,n_train,d,within_2sigma_count,within_2sigma_percent
+1.0710834953710178,1.0349316380181919,0.7952863704059037,80,4,78,97.5

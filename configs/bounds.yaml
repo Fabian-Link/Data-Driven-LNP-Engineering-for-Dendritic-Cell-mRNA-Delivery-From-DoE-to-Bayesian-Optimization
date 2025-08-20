@@ -1,8 +1,8 @@
 #--------------------------------------------------------------------
-# Defining the allowed design space for the optimization process
+# Mixture design space and projection
 #--------------------------------------------------------------------
 
-# Component names in order
+# Component names in order (must match data columns)
 mixture_labels:
   - PEG-DMG-2000
   - Ionizable Lipid

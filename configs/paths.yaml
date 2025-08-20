@@ -1,8 +1,14 @@
-#========================
-# Defining file paths
-#========================
+#--------------------------------------------------------------------
+# File system locations used by scripts
+#--------------------------------------------------------------------
 
 results:
-  figures_dir: results/figures
-  design_dir:  results/design
+  figures_dir:   results/figures
+  design_dir:    results/design
+  tables_dir:    results/tables
+  candidates_dir: results/candidates
+  models_dir:    results/models
 
+data:
+  train_excel:        data/raw/LNP_Formulation_All_Data_Mean.xlsx
+  triplicates_excel:  data/raw/LNP_Formulation_8_Luciferase_triplicates.xlsx
