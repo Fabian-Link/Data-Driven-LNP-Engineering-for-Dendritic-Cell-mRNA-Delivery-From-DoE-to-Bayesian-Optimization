@@ -3,7 +3,7 @@
 #--------------------------------------------------------------------
 
 acquisition:
-  name: LogNEI          # one of: LogNEI, LogEI, PI, UCB
+  name: LogEI          # one of: LogNEI, LogEI, PI, UCB
   beta: 0.05            # only used if name == UCB
 
 optimization:
