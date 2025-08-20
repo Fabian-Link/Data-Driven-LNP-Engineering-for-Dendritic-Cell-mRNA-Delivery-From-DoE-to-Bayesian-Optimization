@@ -1,0 +1,12 @@
+{
+  "acquisition": "LogNEI",
+  "beta": null,
+  "q": 3,
+  "num_restarts": 10,
+  "raw_samples": 512,
+  "mc_samples": 256,
+  "bounds_yaml": "C:\\Users\\Fabian\\Git Repository\\Data-Driven-LNP-Engineering-for-Dendritic-Cell-mRNA-Delivery-From-DoE-to-Bayesian-Optimization\\configs\\bounds.yaml",
+  "acq_yaml": "C:\\Users\\Fabian\\Git Repository\\Data-Driven-LNP-Engineering-for-Dendritic-Cell-mRNA-Delivery-From-DoE-to-Bayesian-Optimization\\configs\\acquisition.yaml",
+  "model_yaml": "C:\\Users\\Fabian\\Git Repository\\Data-Driven-LNP-Engineering-for-Dendritic-Cell-mRNA-Delivery-From-DoE-to-Bayesian-Optimization\\configs\\model.yaml",
+  "paths_yaml": "C:\\Users\\Fabian\\Git Repository\\Data-Driven-LNP-Engineering-for-Dendritic-Cell-mRNA-Delivery-From-DoE-to-Bayesian-Optimization\\configs\\paths.yaml"
+}

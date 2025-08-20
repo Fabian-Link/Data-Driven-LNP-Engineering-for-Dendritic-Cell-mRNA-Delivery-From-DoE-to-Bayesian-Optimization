@@ -10,6 +10,7 @@ from datetime import datetime
 
 import torch
 from botorch.sampling.normal import SobolQMCNormalSampler
+from gpytorch.priors import GammaPrior
 
 # Make `src/` importable
 ROOT = Path(__file__).resolve().parents[1]
@@ -31,6 +32,7 @@ from models.acquisition import (
 CONFIG_PATHS  = ROOT / "configs" / "paths.yaml"
 CONFIG_BOUNDS = ROOT / "configs" / "bounds.yaml"
 CONFIG_ACQ    = ROOT / "configs" / "acquisition.yaml"
+CONFIG_MODEL  = ROOT / "configs" / "model.yaml"
 
 # -----------------------------
 # Defaults / fallbacks
@@ -95,6 +97,33 @@ raw_samples  = int(cfg_acq["optimization"].get("raw_samples", 512))
 mc_samples   = int(cfg_acq["optimization"].get("mc_samples", 256))
 
 # -----------------------------
+# Load model.yaml (for noise prior & optional dtype/device)
+# -----------------------------
+noise_prior = None
+if CONFIG_MODEL.exists():
+    with open(CONFIG_MODEL, "r") as f:
+        cfg_model = yaml.safe_load(f) or {}
+
+    # Optional noise prior (should match how you trained in fit_gp.py)
+    npcfg = cfg_model.get("noise_prior") or {}
+    use_prior = bool(npcfg.get("use", True))
+    alpha = npcfg.get("alpha", None)
+    beta_prior  = npcfg.get("beta", None)
+    if use_prior and (alpha is not None) and (beta_prior is not None):
+        noise_prior = GammaPrior(concentration=float(alpha), rate=float(beta_prior))
+        print(f"[propose] Using Gamma noise prior: alpha={alpha}, beta={beta_prior}")
+    else:
+        print("[propose] No noise prior applied (default GaussianLikelihood).")
+
+    # Optional dtype/device/seed overrides
+    rt = cfg_model.get("dtype", "double").lower()
+    dtype = torch.double if rt == "double" else torch.float
+    dev = cfg_model.get("device", "cpu").lower()
+    device = torch.device(dev)
+    seed = int(cfg_model.get("seed", SEED))
+    torch.manual_seed(seed); np.random.seed(seed)
+
+# -----------------------------
 # Rebuild training tensors
 # -----------------------------
 # Prefer processed CSV (written by fit_gp.py) for exact reproducibility.
@@ -125,8 +154,20 @@ if not STATE_PATH.exists():
         "Run scripts/fit_gp.py first."
     )
 
-mll, model = initialize_model(train_x, train_obj, state_dict=None, noise_prior=None)
-model.load_state_dict(torch.load(STATE_PATH, map_location=device))
+# Initialize model with the SAME likelihood/prior structure used in training
+mll, model = initialize_model(train_x, train_obj, state_dict=None, noise_prior=noise_prior)
+
+# Load saved state dict (robust to PyTorch version differences)
+try:
+    try:
+        state = torch.load(STATE_PATH, map_location=device, weights_only=True)  # new PyTorch
+    except TypeError:
+        state = torch.load(STATE_PATH, map_location=device)  # fallback
+    model.load_state_dict(state, strict=True)
+except RuntimeError as e:
+    print(f"[propose] Strict load failed ({e}); retrying with strict=False.")
+    model.load_state_dict(state, strict=False)
+
 model.eval(); model.likelihood.eval()
 print(f"[propose] Loaded GP state_dict from {STATE_PATH}")
 
@@ -218,6 +259,7 @@ sidecar = {
     "mc_samples": mc_samples,
     "bounds_yaml": str(CONFIG_BOUNDS),
     "acq_yaml": str(CONFIG_ACQ),
+    "model_yaml": str(CONFIG_MODEL) if CONFIG_MODEL.exists() else None,
     "paths_yaml": str(CONFIG_PATHS) if CONFIG_PATHS.exists() else None,
 }
 with open(out_csv.with_suffix(".json"), "w") as f:
