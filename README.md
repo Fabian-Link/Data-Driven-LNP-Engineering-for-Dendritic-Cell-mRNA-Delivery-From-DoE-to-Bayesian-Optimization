@@ -100,10 +100,9 @@ This will:
 python scripts/propose_candidates.py
 ````
 Uses your trained GP and configs/acquisition.yaml to suggest the next batch.
-Outputs two CSVs under results/candidates/:
+Outputs a CSVs under results/candidates/:
 
-- candidates_ALRNP_<timestamp>.csv (internal ALR+N/P)
-- candidates_simplex_<timestamp>.csv (use this to run experiments; includes expected log-fluorescence)
+- candidates_<Acquisition function>_<Date>.csv
 
 **Iterate**
 - Run the proposed batch in the lab.
