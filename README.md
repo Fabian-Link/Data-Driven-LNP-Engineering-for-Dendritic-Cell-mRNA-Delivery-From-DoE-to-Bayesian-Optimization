@@ -102,7 +102,7 @@ python scripts/propose_candidates.py
 Uses your trained GP and configs/acquisition.yaml to suggest the next batch.
 Outputs a CSVs under results/candidates/:
 
-- candidates_<Acquisition function>_<Date>.csv
+- candidates_(Acquisition function)_(Date).csv
 
 **Iterate**
 - Run the proposed batch in the lab.
