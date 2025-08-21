@@ -95,7 +95,7 @@ This will:
 - Tables: results/tables/gp_training_history.csv, gp_hyperparams.csv, gp_metrics.json, gp_exploitation_optimum.csv
 - Figures: loss, hyperparameters, parity (with R²), variance-vs-distance, 1D profiles at dataset mean & GP optimum, 2D pairwise contours.
 
-**Propose the enxt batch (Bayesian step)**
+**Propose the next batch (Bayesian step)**
 ````
 python scripts/propose_candidates.py
 ````
@@ -166,7 +166,7 @@ Must satisfy: 0 ≤ L_i ≤ U_i ≤ 1, and sum(L_bounds) ≤ 1 ≤ sum(U_bounds)
 
 - (optional) data.processed_csv: Where the ALR+N/P training table is saved/loaded.
 
-design.yaml — sampling for initial designs (optional)
+**design.yaml — sampling for initial designs (optional)**
 - num_sobol_samples (int ≥ 1): Points per replicate.
 
 - n_replicates (int ≥ 1): Number of Sobol replicates for discrepancy screening.
